@@ -14,6 +14,7 @@ class CreateProductosTable extends Migration {
         {
             $table->increments('id');
             $table->string('nombre');
+            $table->string('descripcion_corta');
             $table->string('descripcion');
             $table->integer('id_marca')->unsigned();
             $table->string('modelo');

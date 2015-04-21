@@ -21,10 +21,12 @@ class CreateUsersTable extends Migration {
 			$table->string('password', 60);
             $table->string('direccion');
             $table->string('telefono');
-            $table->integer('rol');
             $table->boolean('estado')->default(true);
+            $table->integer('id_rol')->unsigned()->nullable();
 			$table->rememberToken();
 			$table->timestamps();
+
+            $table->foreign('id_rol')->references('id')->on('rol');
 		});
 	}
 

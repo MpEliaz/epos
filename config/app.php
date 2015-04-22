@@ -139,6 +139,9 @@ return [
 		/*
 		 * Application Service Providers...
 		 */
+
+        'Collective\Html\HtmlServiceProvider',
+
 		'Epos\Providers\AppServiceProvider',
 		'Epos\Providers\BusServiceProvider',
 		'Epos\Providers\ConfigServiceProvider',
@@ -192,6 +195,8 @@ return [
 		'URL'       => 'Illuminate\Support\Facades\URL',
 		'Validator' => 'Illuminate\Support\Facades\Validator',
 		'View'      => 'Illuminate\Support\Facades\View',
+        'Form'      => 'Collective\Html\FormFacade',
+        'Html'      => 'Collective\Html\HtmlFacade',
 
 	],
 

@@ -14,8 +14,15 @@
 Route::get('/', 'WelcomeController@index');
 
 Route::get('home', 'HomeController@index');
+Route::resource('productos', 'ProductosController');
+//Route::get('productos/nuevo', 'ProductosController@create');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
+
+Route::get('hola',function(){
+
+   return "HOLA";
+});

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRolTable extends Migration {
+class CreateCategoriaProductosTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,7 +12,7 @@ class CreateRolTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('rol', function(Blueprint $table)
+		Schema::create('categoria', function(Blueprint $table)
 		{
 			$table->increments('id');
             $table->string('nombre');
@@ -28,8 +28,7 @@ class CreateRolTable extends Migration {
 	 */
 	public function down()
 	{
-        Schema::drop('usuarios');
-		Schema::drop('rol');
+		Schema::drop('categoria');
 	}
 
 }

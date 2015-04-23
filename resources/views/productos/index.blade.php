@@ -37,7 +37,7 @@
                         @elseif ($producto->estado === 0)
                             <button class="btn btn-success">Activar</button>
                         @endif</td>
-                    <td><button class="btn btn-primary">Modificar</button></td>
+                    <td><a href="{{route('productos.edit', $producto->id)}}" class="btn btn-primary">Modificar</a></td>
                 </tr>
             @endforeach
     	</tbody>

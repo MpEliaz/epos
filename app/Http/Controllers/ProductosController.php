@@ -4,13 +4,17 @@ use Epos\Http\Requests;
 use Epos\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input;
 use Producto;
 
 class ProductosController extends Controller {
 
-    public function __construct()
+    protected $request;
+
+    public function __construct(Request $request)
     {
         $this->middleware('auth');
+        $this->request = $request;
     }
 
 	/**
@@ -22,7 +26,7 @@ class ProductosController extends Controller {
 	{
 		$productos = DB::table('productos')
             ->join('marca', 'productos.id_marca', '=', 'marca.id')
-            ->select('productos.id','productos.nombre','productos.descripcion_corta','marca.nombre as marca','productos.modelo','productos.precio_costo','productos.precio_venta','productos.stock','productos.estado')
+            ->select('productos.id','productos.nombre','productos.descripcion_corta','productos.descripcion','marca.nombre as marca','productos.modelo','productos.precio_costo','productos.precio_venta','productos.stock','productos.estado')
             ->paginate();
 
         return view('productos.index', compact('productos'));
@@ -44,9 +48,13 @@ class ProductosController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function store()
+	public function store(Request $request)
 	{
-		return $input = Input::all();
+		$producto = new Producto($request->all());
+
+        $producto->save();
+
+        return redirect()->route('productos.index');
 	}
 
 	/**
@@ -68,7 +76,9 @@ class ProductosController extends Controller {
 	 */
 	public function edit($id)
 	{
-		//
+		$producto = Producto::findOrFail($id);
+
+        return view('productos.modificar', compact('producto'));
 	}
 
 	/**
@@ -79,7 +89,11 @@ class ProductosController extends Controller {
 	 */
 	public function update($id)
 	{
-		//
+		$producto = Producto::findOrFail($id);
+        $producto->fill(Request::all());
+        $producto->save();
+
+        return dd($producto);
 	}
 
 	/**

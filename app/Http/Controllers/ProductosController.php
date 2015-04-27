@@ -119,7 +119,7 @@ class ProductosController extends Controller {
         $producto->formatear_fecha();
         $producto->save();
 
-        return redirect()->back()->with(['msg','Modificado correctamente']);
+        return redirect()->back()->with('message','Modificado correctamente');
 	}
 
 	/**

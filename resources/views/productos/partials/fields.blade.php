@@ -38,6 +38,12 @@
         </div>
     </div>
     <div class="form-group">
+        {!!Form::label('margen', '% de Margen',['class' => 'col-md-4'])!!}
+        <div class="col-sm-8">
+            {!!Form::text('margen', null, ['class' => 'form-control', 'placeholder' => '% margen'])!!}
+        </div>
+    </div>
+    <div class="form-group">
         {!!Form::label('precio_venta', 'Precio Venta',['class' => 'col-md-4'])!!}
         <div class="col-sm-8">
             {!!Form::text('precio_venta', null, ['class' => 'form-control', 'placeholder' => 'Precio Venta'])!!}

@@ -18,8 +18,9 @@ class CreateProductosTable extends Migration {
             $table->string('descripcion');
             $table->integer('id_marca')->unsigned();
             $table->string('modelo');
-            $table->string('precio_costo');
-            $table->string('precio_venta');
+            $table->integer('precio_costo');
+            $table->integer('margen');
+            $table->integer('precio_venta');
             $table->integer('stock');
             $table->string('codigo');
             $table->boolean('estado');

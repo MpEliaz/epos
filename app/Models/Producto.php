@@ -12,6 +12,7 @@ class Producto extends Model {
                             'id_marca',
                             'modelo',
                             'precio_costo',
+                            'margen',
                             'precio_venta',
                             'stock',
                             'codigo',

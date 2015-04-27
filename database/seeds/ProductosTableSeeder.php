@@ -18,6 +18,7 @@ class ProductosTableSeeder extends Seeder {
                 'id_marca' => '1',
                 'modelo' => $faker->SafeColorName,
                 'precio_costo' => $faker->numberBetween($min = 1000, $max = 9000),
+                'margen' => $faker->numberBetween($min = 0, $max = 100),
                 'precio_venta' => $faker->numberBetween($min = 10000, $max = 60000),
                 'stock' => $faker->randomDigitNotNull,
                 'codigo' => $faker->ean13,

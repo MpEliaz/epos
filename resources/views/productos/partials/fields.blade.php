@@ -8,7 +8,7 @@
     <div class="form-group">
         {!!Form::label('id_marca', 'Marca',['class' => 'col-sm-4'])!!}
         <div class="col-sm-8">
-            {!!Form::text('id_marca', null, ['class' => 'form-control', 'placeholder' => 'Marca del producto'])!!}
+            {!!Form::select('id_marca',$marcas, null, ['class' => 'form-control', 'placeholder' => 'Marca del producto'])!!}
         </div>
     </div>
     <div class="form-group">
@@ -52,7 +52,7 @@
     <div class="form-group">
         {!!Form::label('codigo', 'Codigo',['class' => 'col-sm-4'])!!}
         <div class="col-sm-8">
-            {!!Form::text('codigo', null, ['class' => 'form-control', 'placeholder' => 'Stock'])!!}
+            {!!Form::text('codigo', null, ['class' => 'form-control', 'placeholder' => 'Codigo'])!!}
         </div>
     </div>
     <div class="form-group">
@@ -64,7 +64,7 @@
     <div class="form-group">
         {!!Form::label('fecha_ingreso', 'Fecha Ingreso',['class' => 'col-sm-4'])!!}
         <div class="col-sm-8">
-            {!!Form::text('fecha_ingreso', null, ['class' => 'form-control', 'placeholder' => 'Fecha Ingreso'])!!}
+            {!!Form::text('fecha_ingreso', null, ['class' => 'form-control fecha-picker', 'placeholder' => 'Fecha Ingreso'])!!}
 
         </div>
     </div>

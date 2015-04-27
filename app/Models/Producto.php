@@ -1,5 +1,6 @@
-<?php
+<?php namespace Epos\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Producto extends Model {
@@ -17,8 +18,18 @@ class Producto extends Model {
                             'estado',
                             'fecha_ingreso'];
 
-    public function get_marca()
+    public function formatear_fecha()
     {
-        return $this->hasOne('Marca');
+        $this->fecha_ingreso = Carbon::parse($this->fecha_ingreso)->format('Y/m/d H:i:s');
+    }
+
+    public function scopeQ($query, $q)
+    {
+        if($q != "" || $q != null)
+        {
+            $query->where('productos.nombre','like', '%'.$q.'%')->  orWhere('productos.descripcion_corta','like', '%'.$q.'%');
+
+        }
+
     }
 }

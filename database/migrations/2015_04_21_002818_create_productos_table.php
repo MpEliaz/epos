@@ -23,10 +23,11 @@ class CreateProductosTable extends Migration {
             $table->integer('stock');
             $table->string('codigo');
             $table->boolean('estado');
+            $table->integer('id_categoria')->unsigned()->nullable();
             $table->dateTime('fecha_ingreso');
             $table->timestamps();
 
-            $table->foreign('id_marca')->references('id')->on('marca');
+            $table->foreign('id_marca')->references('id')->on('marcas');
         });
     }
     /**

@@ -1,11 +1,11 @@
 <?php namespace Epos\Http\Controllers;
 
 use Epos\Http\Requests;
-use Epos\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Input;
-use Producto;
+use Epos\Models\Marca;
+use Epos\Models\Producto;
+use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Response;
+
 
 class ProductosController extends Controller {
 
@@ -22,25 +22,30 @@ class ProductosController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function index(\Illuminate\Http\Request $request)
 	{
-		$productos = DB::table('productos')
-            ->join('marca', 'productos.id_marca', '=', 'marca.id')
-            ->select('productos.id','productos.nombre','productos.descripcion_corta','productos.descripcion','marca.nombre as marca','productos.modelo','productos.precio_costo','productos.precio_venta','productos.stock','productos.estado')
+        $q = $request->get('q');
+
+		$productos = Producto::join('marcas', 'productos.id_marca', '=', 'marcas.id')
+            ->select('productos.id','productos.nombre','productos.descripcion_corta','productos.descripcion','marcas.nombre as marca','productos.modelo','productos.precio_costo','productos.precio_venta','productos.stock','productos.estado')
+            ->q($q)
             ->paginate();
 
         return view('productos.index', compact('productos'));
         //return dd($productos);
 	}
 
-	/**
+        /**
 	 * Show the form for creating a new resource.
 	 *
 	 * @return Response
 	 */
 	public function create()
 	{
-		return view('productos.nuevo');
+        $data = Marca::all();
+        $marcas = $data->lists('nombre','id');
+
+		return view('productos.nuevo',compact('marcas'));
 	}
 
 	/**
@@ -50,11 +55,20 @@ class ProductosController extends Controller {
 	 */
 	public function store(Request $request)
 	{
-		$producto = new Producto($request->all());
+        $producto = new Producto($request->all());
+        if ($producto->estado == 'on')
+        {
+            $producto->estado = true;
+        }
+        else
+        {
+            $producto->estado = false;
+        }
 
         $producto->save();
 
         return redirect()->route('productos.index');
+        //return dd($producto);
 	}
 
 	/**
@@ -65,7 +79,8 @@ class ProductosController extends Controller {
 	 */
 	public function show($id)
 	{
-		//
+		$producto = Producto::findOrFail($id);
+        return dd($producto);
 	}
 
 	/**
@@ -77,8 +92,10 @@ class ProductosController extends Controller {
 	public function edit($id)
 	{
 		$producto = Producto::findOrFail($id);
+        $data = Marca::all();
+        $marcas = $data->lists('nombre','id');
 
-        return view('productos.modificar', compact('producto'));
+        return view('productos.modificar', compact('producto', 'marcas'));
 	}
 
 	/**
@@ -91,9 +108,18 @@ class ProductosController extends Controller {
 	{
 		$producto = Producto::findOrFail($id);
         $producto->fill(Request::all());
+        if ($producto->estado == 'on')
+        {
+            $producto->estado = true;
+        }
+        else
+        {
+            $producto->estado = false;
+        }
+        $producto->formatear_fecha();
         $producto->save();
 
-        return dd($producto);
+        return redirect()->back();
 	}
 
 	/**
@@ -106,5 +132,33 @@ class ProductosController extends Controller {
 	{
 		//
 	}
+
+    public function activar()
+    {
+        if(Request::ajax())
+        {
+            $id = Request::get('id');
+
+            $producto = Producto::findOrFail($id);
+            $producto->estado = true;
+            $producto->save();
+            return Response::json($producto);
+        }
+        return false;
+    }
+
+    public function desactivar()
+    {
+        if(Request::ajax())
+        {
+            $id = Request::get('id');
+
+            $producto = Producto::findOrFail($id);
+            $producto->estado = false;
+            $producto->save();
+            return Response::json($producto);
+        }
+        return false;
+    }
 
 }

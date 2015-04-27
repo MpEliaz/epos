@@ -22,7 +22,8 @@ class ProductosTableSeeder extends Seeder {
                 'stock' => $faker->randomDigitNotNull,
                 'codigo' => $faker->ean13,
                 'estado' => true,
-                'fecha_ingreso' => ''
+                'id_categoria' => null,
+                'fecha_ingreso' => $faker->dateTime
             ));
         }
     }

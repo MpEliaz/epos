@@ -5,9 +5,16 @@
 <div class="container">
     <div class="row">
         <a class="btn btn-default" href="{{url('productos/create')}}">Nuevo</a>
-        <span>Hay <strong>{{$productos->total()}}</strong> productos</span><br/><br/>
+        <span>Hay <strong>{{$productos->total()}}</strong> productos</span>
+
+              {!!Form::open(['route' => 'productos.index', 'method'=>'GET', 'class'=>'navbar-form navbar-right', 'role'=>'search'])!!}
+                <div class="form-group">
+                  {!! Form::text('q', null, ['class'=> 'form-control', 'placeholder'=> 'Buscar'])!!}
+                </div>
+                <button type="submit" class="btn btn-default">Buscar</button>
+              {!!Form::close()!!}
     </div>
-	<table class="table table-hover">
+	<table id="productos-tabla" class=" table table-hover">
     	<thead>
     		<tr>
     			<td>Id</td>
@@ -33,9 +40,9 @@
 	    			<td>{{$producto->precio_costo}}</td>
 	    			<td>{{$producto->precio_venta}}</td>
 	    			<td>{{$producto->stock}}</td>
-	    			<td> @if($producto->estado === 1)<button class="btn btn-danger">Desactivar</button>
+	    			<td> @if($producto->estado === 1)<button onclick="desactivar_producto({{$producto->id}})" class="btn btn-danger">Desactivar</button>
                         @elseif ($producto->estado === 0)
-                            <button class="btn btn-success">Activar</button>
+                            <button onclick="activar_producto({{$producto->id}})" class="btn btn-success">Activar</button>
                         @endif</td>
                     <td><a href="{{route('productos.edit', $producto->id)}}" class="btn btn-primary">Modificar</a></td>
                 </tr>
@@ -44,4 +51,5 @@
     </table>
     {!! $productos->render() !!}
 </div>
+<div id="test"></div>
 @endsection

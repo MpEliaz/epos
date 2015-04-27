@@ -14,8 +14,10 @@
 Route::get('/', 'WelcomeController@index');
 
 Route::get('home', 'HomeController@index');
+Route::post('productos/activar', 'ProductosController@activar');
+Route::post('productos/desactivar', 'ProductosController@desactivar');
 Route::resource('productos', 'ProductosController');
-//Route::get('productos/nuevo', 'ProductosController@create');
+
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

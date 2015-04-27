@@ -6,7 +6,7 @@ class MarcaTableSeeder extends Seeder {
 
     public function run()
     {
-        \DB::table('marca')->insert(array(
+        \DB::table('marcas')->insert(array(
             'nombre' => 'Nike'
         ));
     }

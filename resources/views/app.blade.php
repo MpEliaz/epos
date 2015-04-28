@@ -8,6 +8,7 @@
 	<title>Laravel</title>
 
 	<link href="{{ asset('/css/app.css') }}" rel="stylesheet">
+	<link href="{{ asset('/css/main.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/bootstrap-switch.min.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet">
 

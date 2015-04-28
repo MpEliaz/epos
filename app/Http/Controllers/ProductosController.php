@@ -27,7 +27,7 @@ class ProductosController extends Controller {
         $q = $request->get('q');
 
 		$productos = Producto::join('marcas', 'productos.id_marca', '=', 'marcas.id')
-            ->select('productos.id','productos.nombre','productos.descripcion_corta','productos.descripcion','marcas.nombre as marca','productos.modelo','productos.precio_costo','productos.precio_venta','productos.stock','productos.estado')
+            ->select('productos.id','productos.nombre','productos.descripcion_corta','productos.descripcion','marcas.nombre as marca','productos.modelo','productos.precio_neto','productos.precio_venta','productos.stock','productos.estado')
             ->q($q)
             ->paginate();
 

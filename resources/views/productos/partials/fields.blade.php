@@ -18,6 +18,12 @@
         </div>
     </div>
     <div class="form-group">
+        {!!Form::label('numero', 'Numero',['class' => 'col-md-4'])!!}
+        <div class="col-sm-8">
+            {!!Form::text('numero', null, ['class' => 'form-control', 'placeholder' => 'Numero del producto'])!!}
+        </div>
+    </div>
+    <div class="form-group">
         {!!Form::label('descripcion_corta', 'Descripción Corta',['class' => 'col-md-4'])!!}
         <div class="col-sm-8">
             {!!Form::text('descripcion_corta', null, ['class' => 'form-control', 'placeholder' => 'Breve descripción'])!!}
@@ -31,12 +37,12 @@
     </div>
 </div>
 <div class="col-md-6">
-    <div class="form-group">
-        {!!Form::label('precio_costo', 'Precio Costo',['class' => 'col-md-4'])!!}
-        <div class="col-sm-8">
-            {!!Form::text('precio_costo', null, ['class' => 'form-control', 'placeholder' => 'Precio Costo'])!!}
+        <div class="form-group">
+            {!!Form::label('precio_neto', 'Precio Neto',['class' => 'col-md-4'])!!}
+            <div class="col-sm-8">
+                {!!Form::text('precio_neto', null, ['class' => 'form-control', 'placeholder' => 'Precio Neto'])!!}
+            </div>
         </div>
-    </div>
     <div class="form-group">
         {!!Form::label('margen', '% de Margen',['class' => 'col-md-4'])!!}
         <div class="col-sm-8">
@@ -44,7 +50,7 @@
         </div>
     </div>
     <div class="form-group">
-        {!!Form::label('precio_venta', 'Precio Venta',['class' => 'col-md-4'])!!}
+        {!!Form::label('precio_venta', 'Precio Venta (margen + iva)',['class' => 'col-md-4'])!!}
         <div class="col-sm-8">
             {!!Form::text('precio_venta', null, ['class' => 'form-control', 'placeholder' => 'Precio Venta'])!!}
         </div>

@@ -31,13 +31,17 @@
     	</thead>
     	<tbody>
     		@foreach($productos as $producto)
-                <tr>
+    		@if($producto->stock <= 2)
+    		    <tr class="stock-bajo-table">
+    		@else
+    		    <tr>
+    		@endif
 	                <td>{{$producto->id}}</td>
 	    			<td>{{$producto->nombre}}</td>
 	    			<td>{{$producto->descripcion_corta}}</td>
 	    			<td>{{$producto->marca}}</td>
 	    			<td>{{$producto->modelo}}</td>
-	    			<td>{{$producto->precio_costo}}</td>
+	    			<td>{{$producto->precio_neto}}</td>
 	    			<td>{{$producto->precio_venta}}</td>
 	    			<td>{{$producto->stock}}</td>
 	    			<td> @if($producto->estado === 1)<button onclick="desactivar_producto({{$producto->id}})" class="btn btn-danger">Desactivar</button>

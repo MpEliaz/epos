@@ -39,17 +39,22 @@ $(function(){
 
 $("#margen").keyup(function(){
 
-    precio_venta = parseInt($("#precio_costo").val())*((parseInt($("#margen").val())/100)+1);
-    if(precio_venta!=0 && !isNaN(precio_venta) && precio_venta!="")
+    precio_margen = parseInt($("#precio_neto").val())*((parseInt($("#margen").val())/100)+1);
+    if(precio_margen!=0 && !isNaN(precio_margen) && precio_margen!="")
     {
-        $("#precio_venta").val(precio_venta);
+        precio_margen_iva = precio_margen*1.19;
+
+        if(precio_margen_iva!=0 && !isNaN(precio_margen_iva) && precio_margen_iva!="")
+        {
+            $("#precio_venta").val(precio_margen_iva);
+        }
     }
 
 });
 
-$("#precio_venta").keyup(function(){
+/*$("#precio_neto").keyup(function(){
 
-    margen = parseInt($("#precio_venta").val())-parseInt($("#precio_costo").val());
+    margen = parseInt($("#precio_neto").val())-parseInt($("#precio_costo").val());
     margen = margen*100/parseInt($("#precio_costo").val())
     if(margen!=0 && !isNaN(margen) && margen!="")
     {
@@ -57,3 +62,15 @@ $("#precio_venta").keyup(function(){
     }
 
 });
+
+$("#precio_neto").change(function(){
+
+    venta = parseInt($("#precio_neto").val()*1.19);
+
+    if(venta!=0 && !isNaN(venta) && venta!="")
+    {
+        $("#precio_venta").val(venta);
+    }
+
+});*/
+

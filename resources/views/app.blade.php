@@ -39,6 +39,7 @@
 				<ul class="nav navbar-nav">
 					<li><a href="{{ url('/') }}">Inicio</a></li>
 					<li><a href="{{url('/productos')}}">Productos</a></li>
+                    <li><a href="{{url('/ventas')}}">Ventas</a></li>
 				</ul>
 
 				<ul class="nav navbar-nav navbar-right">

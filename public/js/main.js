@@ -52,6 +52,8 @@ $("#margen").keyup(function(){
 
 });
 
+$('.alerta').hide(4000);
+
 /*$("#precio_neto").keyup(function(){
 
     margen = parseInt($("#precio_neto").val())-parseInt($("#precio_costo").val());

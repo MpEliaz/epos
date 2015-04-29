@@ -27,6 +27,8 @@ class CreateVentaTable extends Migration {
 
 
         });
+
+
 	}
 
 	/**
@@ -37,6 +39,7 @@ class CreateVentaTable extends Migration {
 	public function down()
 	{
 		Schema::drop('ventas');
+
 	}
 
 }

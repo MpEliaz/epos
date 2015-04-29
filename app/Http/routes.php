@@ -18,6 +18,8 @@ Route::post('productos/activar', 'ProductosController@activar');
 Route::post('productos/desactivar', 'ProductosController@desactivar');
 Route::resource('productos', 'ProductosController');
 
+Route::resource('ventas', 'VentasController');
+
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

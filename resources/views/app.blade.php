@@ -21,6 +21,10 @@
 		<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
 		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 	<![endif]-->
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+        <script src="{{asset('/js/angular/controller.js')}}"></script>
+        <script src="{{asset('/js/angular/ui-bootstrap-tpls-0.12.1.min.js')}}"></script>
+        <script src="{{asset('/js/angular/angular-local-storage.min.js')}}"></script>
 </head>
 <body>
 	<nav class="navbar navbar-default">
@@ -68,6 +72,7 @@
     <script src="{{ asset('/js/bootstrap-datepicker.min.js') }}"></script>
 	<script src="{{ asset('/js/bootstrap-datepicker.es.min.js') }}"></script>
 	<script src="{{ asset('/js/jquery.tablesorter.min.js') }}"></script>
+	<script src="{{ asset('/js/bootstrap3-typeahead.min.js') }}"></script>
 	<script src="{{ asset('/js/main.js') }}"></script>
 
 	<script>

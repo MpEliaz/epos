@@ -11,6 +11,9 @@
 |
 */
 
+use Epos\Models\Producto;
+use Illuminate\Support\Facades\Input;
+
 Route::get('/', 'WelcomeController@index');
 
 Route::get('home', 'HomeController@index');
@@ -27,6 +30,8 @@ Route::controllers([
 ]);
 
 Route::get('hola',function(){
-
-   return "HOLA";
+    $nombre = Input::get('nombre');
+    $productos = Producto::where('nombre', 'like', '%'.$nombre.'%')->get();
+    //$productos = Producto::all();
+    return response()->json($productos);
 });

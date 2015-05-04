@@ -2,20 +2,37 @@ angular.module("ventasApp", ['ui.bootstrap', 'LocalStorageModule'])
     .service('manejadorVenta', function (localStorageService) {
 
         this.key = 'venta';
+        this.ventakey ='total';
         if(localStorageService.get(this.key)) {
             this.productos = localStorageService.get(this.key);
         }
         else{
             this.productos = [];
         }
+        if(localStorageService.get(this.ventakey)) {
+            this.valorTotal = localStorageService.get(this.ventakey);
+        }
+        else{
+            this.valorTotal = 0;
+        }
 
         this.add = function (prod) {
             this.productos.push(prod);
             this.updateLocalStorage();
+            this.updateTotal();
         };
 
         this.updateLocalStorage = function () {
             localStorageService.set(this.key, this.productos);
+        };
+
+        this.updateTotal = function () {
+            var subtotal = 0;
+            angular.forEach(this.productos, function (item) {
+                subtotal += parseInt(item.precio_venta);
+            });
+            this.valorTotal = subtotal;
+            localStorageService.set(this.ventakey, this.valorTotal);
         };
 
         this.clean = function () {
@@ -37,14 +54,11 @@ angular.module("ventasApp", ['ui.bootstrap', 'LocalStorageModule'])
         };
 
         this.getValorTotal = function () {
-            angular.forEach(this.productos, function (item) {
-               $scope.valortTotal += item.valor_venta;
-            });
-            return $scope.valortTotal;
+            return this.valorTotal;
         };
 
     })
-    .controller("BusquedaController", function($scope, $http, manejadorVenta){
+    .controller("VentasController", function($scope, $http, manejadorVenta){
 
         $scope.getLocation = function(val) {
             return $http.get('http://localhost:8000/hola/', {
@@ -57,18 +71,20 @@ angular.module("ventasApp", ['ui.bootstrap', 'LocalStorageModule'])
                 });
             });
         };
-
+        $scope.$apply(function () {
+            $scope.valorTotal = manejadorVenta.getValorTotal();
+        });
         $scope.productos = manejadorVenta.getAll();
+
         $scope.newProd ={};
         $scope.addProducto = function(prod) {
-
-            console.log(prod);
             $scope.newProd=prod;
             manejadorVenta.add($scope.newProd);
             $scope.newProd ={};
 
         };
-    }).controller("totalController", function($scope, manejadorVenta) {
-        $scope.valorTotal=2000;
-        manejadorVenta.getValorTotal();
-    });
+        $scope.clearAll = function () {
+            manejadorVenta.clean();
+        }
+
+    })

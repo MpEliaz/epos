@@ -5,12 +5,13 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="csrf-token" content="{{ csrf_token() }}" />
-	<title>Laravel</title>
+	<title>EPOS - Project</title>
 
 	<link href="{{ asset('/css/app.css') }}" rel="stylesheet">
 	<link href="{{ asset('/css/main.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/bootstrap-switch.min.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/font-awesome.min.css') }}" rel="stylesheet">
 
 	<!-- Fonts -->
 	<link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
@@ -72,7 +73,6 @@
     <script src="{{ asset('/js/bootstrap-datepicker.min.js') }}"></script>
 	<script src="{{ asset('/js/bootstrap-datepicker.es.min.js') }}"></script>
 	<script src="{{ asset('/js/jquery.tablesorter.min.js') }}"></script>
-	<script src="{{ asset('/js/bootstrap3-typeahead.min.js') }}"></script>
 	<script src="{{ asset('/js/main.js') }}"></script>
 
 	<script>

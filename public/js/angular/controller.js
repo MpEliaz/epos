@@ -17,12 +17,14 @@ angular.module("ventasApp", ['ui.bootstrap', 'LocalStorageModule'])
         }
 
         this.add = function (prod) {
+            console.log(prod);
             this.productos.push(prod);
             this.updateLocalStorage();
             this.updateTotal();
         };
 
         this.updateLocalStorage = function () {
+            console.log("actualizado");
             localStorageService.set(this.key, this.productos);
         };
 
@@ -31,13 +33,15 @@ angular.module("ventasApp", ['ui.bootstrap', 'LocalStorageModule'])
             angular.forEach(this.productos, function (item) {
                 subtotal += parseInt(item.precio_venta);
             });
-            this.valorTotal = subtotal;
+                this.valorTotal = subtotal;
+
             localStorageService.set(this.ventakey, this.valorTotal);
         };
 
         this.clean = function () {
             this.productos = [];
             this.updateLocalStorage();
+            this.updateTotal();
             return this.getAll();
         };
 
@@ -50,6 +54,7 @@ angular.module("ventasApp", ['ui.bootstrap', 'LocalStorageModule'])
                 return prod !== item;
             });
             this.updateLocalStorage();
+            this.updateTotal();
             return this.getAll();
         };
 
@@ -71,20 +76,28 @@ angular.module("ventasApp", ['ui.bootstrap', 'LocalStorageModule'])
                 });
             });
         };
-        $scope.$apply(function () {
-            $scope.valorTotal = manejadorVenta.getValorTotal();
-        });
+
+        $scope.valorTotal = manejadorVenta.getValorTotal();
         $scope.productos = manejadorVenta.getAll();
 
-        $scope.newProd ={};
         $scope.addProducto = function(prod) {
             $scope.newProd=prod;
             manejadorVenta.add($scope.newProd);
             $scope.newProd ={};
+            $scope.valorTotal = manejadorVenta.getValorTotal();
+            $scope.searchText = "";
+
 
         };
         $scope.clearAll = function () {
-            manejadorVenta.clean();
+           $scope.productos = manejadorVenta.clean();
+           $scope.valorTotal = manejadorVenta.getValorTotal();
+        };
+
+        $scope.removeProd = function (item) {
+            $scope.productos = manejadorVenta.removeItem(item);
+            $scope.valorTotal = manejadorVenta.getValorTotal();
         }
 
-    })
+
+    });

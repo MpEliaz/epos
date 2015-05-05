@@ -18,7 +18,13 @@ angular.module("ventasApp", ['ui.bootstrap', 'LocalStorageModule'])
 
         this.add = function (prod) {
             console.log(prod);
-            this.productos.push(prod);
+            angular.forEach(this.productos, function (item) {
+                if(prod.id == item.id){
+                    item.cant_venta = prod.cant_venta;
+                    prod = null;
+                }
+            });
+            if(prod!= null){this.productos.push(prod);}
             this.updateLocalStorage();
             this.updateTotal();
         };
@@ -31,8 +37,13 @@ angular.module("ventasApp", ['ui.bootstrap', 'LocalStorageModule'])
         this.updateTotal = function () {
             var subtotal = 0;
             angular.forEach(this.productos, function (item) {
-                subtotal += parseInt(item.precio_venta);
+
+                for(i=0; i<item.cant_venta; i++)
+                {
+                    subtotal += parseInt(item.precio_venta);
+                }
             });
+            console.log("subtotal: "+subtotal);
                 this.valorTotal = subtotal;
 
             localStorageService.set(this.ventakey, this.valorTotal);
@@ -61,6 +72,15 @@ angular.module("ventasApp", ['ui.bootstrap', 'LocalStorageModule'])
         this.getValorTotal = function () {
             return this.valorTotal;
         };
+        
+        this.cerrarVenta = function () {
+            productos = this.getAll();
+            productos_data=[];
+            angular.forEach(productos, function (prod) {
+                productos_data.push({'id': prod.id, 'cantidad': prod.cant_venta})
+            });
+            return productos_data;
+        }
 
     })
     .controller("VentasController", function($scope, $http, manejadorVenta){
@@ -82,6 +102,7 @@ angular.module("ventasApp", ['ui.bootstrap', 'LocalStorageModule'])
 
         $scope.addProducto = function(prod) {
             $scope.newProd=prod;
+            $scope.newProd['cant_venta']=1;
             manejadorVenta.add($scope.newProd);
             $scope.newProd ={};
             $scope.valorTotal = manejadorVenta.getValorTotal();
@@ -95,9 +116,27 @@ angular.module("ventasApp", ['ui.bootstrap', 'LocalStorageModule'])
         };
 
         $scope.removeProd = function (item) {
+            console.log(item);
             $scope.productos = manejadorVenta.removeItem(item);
             $scope.valorTotal = manejadorVenta.getValorTotal();
-        }
+        };
+
+        $scope.updateCantProd = function () {
+
+            manejadorVenta.updateLocalStorage();
+            manejadorVenta.updateTotal();
+            $scope.valorTotal = manejadorVenta.getValorTotal();
+        };
+
+        $scope.cerrarVenta = function () {
+           productos = manejadorVenta.cerrarVenta();
+            $http.post('http://localhost:8000/send/', {
+                params: productos
+            }).success(function(response){
+                console.log(response);
+            });
+        };
+
 
 
     });

@@ -5,7 +5,7 @@
       <extra-name-characters>#@</extra-name-characters>
       <identifier-quote-string>`</identifier-quote-string>
     </database-info>
-    <case-sensitivity plain-identifiers="mixed" quoted-identifiers="upper"/>
+    <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower"/>
     <schema name="" catalog="eposdb"/>
     <table name="categorias" schema="" catalog="eposdb" type="TABLE">
       <column name="id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -15,6 +15,16 @@
       <column name="updated_at" sqlType="TIMESTAMP" precision="19" scale="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
       <primary-key name="PRIMARY" columns="id"/>
       <exported-key name="productos_id_categoria_foreign" table="productos" schema="" catalog="eposdb" columns="id_categoria"/>
+    </table>
+    <table name="descuentos" schema="" catalog="eposdb" type="TABLE">
+      <column name="id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="codigo_descuento" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="titulo" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="descripcion" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="estado" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="created_at" sqlType="TIMESTAMP" precision="19" scale="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <column name="updated_at" sqlType="TIMESTAMP" precision="19" scale="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <primary-key name="PRIMARY" columns="id"/>
     </table>
     <table name="marcas" schema="" catalog="eposdb" type="TABLE">
       <column name="id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -56,6 +66,7 @@
       <primary-key name="PRIMARY" columns="id"/>
       <foreign-key name="productos_id_categoria_foreign" columns="id_categoria" ref-table="categorias" ref-schema="" ref-catalog="eposdb" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
       <foreign-key name="productos_id_marca_foreign" columns="id_marca" ref-table="marcas" ref-schema="" ref-catalog="eposdb" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="venta_detelle_producto_id_foreign" table="venta_detelle" schema="" catalog="eposdb" columns="producto_id"/>
       <index name="productos_id_categoria_foreign" unique="false" columns="id_categoria"/>
       <index name="productos_id_marca_foreign" unique="false" columns="id_marca"/>
     </table>
@@ -86,6 +97,18 @@
       <index name="usuarios_email_unique" unique="true" columns="email"/>
       <index name="usuarios_id_rol_foreign" unique="false" columns="id_rol"/>
     </table>
+    <table name="venta_detelle" schema="" catalog="eposdb" type="TABLE">
+      <column name="id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="venta_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="producto_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="created_at" sqlType="TIMESTAMP" precision="19" scale="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <column name="updated_at" sqlType="TIMESTAMP" precision="19" scale="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="venta_detelle_producto_id_foreign" columns="producto_id" ref-table="productos" ref-schema="" ref-catalog="eposdb" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="venta_detelle_venta_id_foreign" columns="venta_id" ref-table="ventas" ref-schema="" ref-catalog="eposdb" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <index name="venta_detelle_producto_id_index" unique="false" columns="producto_id"/>
+      <index name="venta_detelle_venta_id_index" unique="false" columns="venta_id"/>
+    </table>
     <table name="ventas" schema="" catalog="eposdb" type="TABLE">
       <column name="id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="nro_venta" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
@@ -97,6 +120,7 @@
       <column name="id_vendedor" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="id_cliente" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="venta_detelle_venta_id_foreign" table="venta_detelle" schema="" catalog="eposdb" columns="venta_id"/>
     </table>
   </data-source>
 </component>

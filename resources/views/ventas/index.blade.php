@@ -57,10 +57,15 @@
                         <div class="form-inline">
                             <label for=""><strong>Agregar Codigo Descuento:</strong></label>
                             <div class="form-group">
-                                <input type="text" class="form-control"/>
-                                <button class="btn btn-primary">agregar</button>
+                                <input type="text" ng-model="desc_seach" class="form-control"/>
+                                <button class="btn btn-primary" ng-click="buscarDescuento()">agregar</button>
                             </div>
                         </div>
+                        <br/>
+                        <ul class="list-group" ng-repeat="desc in descuentos">
+                            <li class="list-group-item">@{{ desc.titulo }}<span class="badge"><i ng-click="clearDesc()" class="glyphicon glyphicon-remove"></i></span></li>
+
+                        </ul>
                     </div>
                 </div>
                 <button class="btn btn-success" ng-click="cerrarVenta()">PAGAR</button>

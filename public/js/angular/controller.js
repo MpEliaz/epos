@@ -3,6 +3,8 @@ angular.module("ventasApp", ['ui.bootstrap', 'LocalStorageModule'])
 
         this.key = 'venta';
         this.ventakey ='total';
+        this.desckey ='desc_';
+
         if(localStorageService.get(this.key)) {
             this.productos = localStorageService.get(this.key);
         }
@@ -15,7 +17,12 @@ angular.module("ventasApp", ['ui.bootstrap', 'LocalStorageModule'])
         else{
             this.valorTotal = 0;
         }
-
+        if(localStorageService.get(this.desckey)) {
+            this.descuentos = localStorageService.get(this.desckey);
+        }
+        else{
+            this.descuentos="";
+        }
         this.add = function (prod) {
             console.log(prod);
             angular.forEach(this.productos, function (item) {
@@ -28,12 +35,14 @@ angular.module("ventasApp", ['ui.bootstrap', 'LocalStorageModule'])
             this.updateLocalStorage();
             this.updateTotal();
         };
-
         this.updateLocalStorage = function () {
             console.log("actualizado");
             localStorageService.set(this.key, this.productos);
         };
-
+        this.updateDescuento = function () {
+            console.log("actualizado");
+            localStorageService.set(this.desckey, this.descuentos);
+        };
         this.updateTotal = function () {
             var subtotal = 0;
             angular.forEach(this.productos, function (item) {
@@ -43,23 +52,33 @@ angular.module("ventasApp", ['ui.bootstrap', 'LocalStorageModule'])
                     subtotal += parseInt(item.precio_venta);
                 }
             });
+            if(this.descuentos.length > 0){
+              subtotal = this.AplicarDescuento(subtotal);
+            }
             console.log("subtotal: "+subtotal);
-                this.valorTotal = subtotal;
+            localStorageService.set(this.ventakey, subtotal);
+            return this.valorTotal = subtotal;
 
-            localStorageService.set(this.ventakey, this.valorTotal);
+
         };
-
         this.clean = function () {
             this.productos = [];
             this.updateLocalStorage();
             this.updateTotal();
             return this.getAll();
         };
-
+        this.cleanDesc = function () {
+            this.descuentos = [];
+            this.updateDescuento();
+            this.updateTotal();
+            return this.descuentos;
+        };
         this.getAll = function () {
             return this.productos;
         };
-
+        this.getAlldesc = function () {
+            return this.descuentos;
+        };
         this.removeItem = function (item) {
             this.productos = this.productos.filter(function(prod) {
                 return prod !== item;
@@ -68,11 +87,9 @@ angular.module("ventasApp", ['ui.bootstrap', 'LocalStorageModule'])
             this.updateTotal();
             return this.getAll();
         };
-
         this.getValorTotal = function () {
             return this.valorTotal;
         };
-        
         this.cerrarVenta = function () {
             productos = this.getAll();
             productos_data=[];
@@ -80,6 +97,19 @@ angular.module("ventasApp", ['ui.bootstrap', 'LocalStorageModule'])
                 productos_data.push({'id': prod.id, 'cantidad': prod.cant_venta})
             });
             return productos_data;
+        }
+        this.agregarDescuento = function (desc) {
+            this.descuentos=null;
+            this.descuentos = desc;
+            this.updateDescuento();
+            return this.descuentos;
+        }
+        this.AplicarDescuento = function (subtotal) {
+            console.log("DESCUENTO: "+this.descuentos[0].descuento);
+            subtotal = subtotal *(1-(this.descuentos[0].descuento /100));
+            console.log(subtotal);
+            return subtotal;
+
         }
 
     })
@@ -99,6 +129,7 @@ angular.module("ventasApp", ['ui.bootstrap', 'LocalStorageModule'])
 
         $scope.valorTotal = manejadorVenta.getValorTotal();
         $scope.productos = manejadorVenta.getAll();
+        $scope.descuentos = manejadorVenta.getAlldesc();
 
         $scope.addProducto = function(prod) {
             $scope.newProd=prod;
@@ -114,20 +145,17 @@ angular.module("ventasApp", ['ui.bootstrap', 'LocalStorageModule'])
            $scope.productos = manejadorVenta.clean();
            $scope.valorTotal = manejadorVenta.getValorTotal();
         };
-
         $scope.removeProd = function (item) {
             console.log(item);
             $scope.productos = manejadorVenta.removeItem(item);
             $scope.valorTotal = manejadorVenta.getValorTotal();
         };
-
         $scope.updateCantProd = function () {
 
             manejadorVenta.updateLocalStorage();
             manejadorVenta.updateTotal();
             $scope.valorTotal = manejadorVenta.getValorTotal();
         };
-
         $scope.cerrarVenta = function () {
            productos = manejadorVenta.cerrarVenta();
             $http.post('http://localhost:8000/send/', {
@@ -136,7 +164,20 @@ angular.module("ventasApp", ['ui.bootstrap', 'LocalStorageModule'])
                 console.log(response);
             });
         };
-
+        $scope.buscarDescuento = function () {
+            val = $scope.desc_seach;
+            return $http.post('http://localhost:8000/desc_/', {
+                    cod_desc : val
+            }).success(function(response){
+                console.log(response);
+                $scope.descuentos = manejadorVenta.agregarDescuento(response);
+                $scope.valorTotal = manejadorVenta.updateTotal();
+            });
+        }
+        $scope.clearDesc = function () {
+            $scope.descuentos = manejadorVenta.cleanDesc();
+            $scope.valorTotal = manejadorVenta.updateTotal();
+        }
 
 
     });

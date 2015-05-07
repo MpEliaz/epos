@@ -11,19 +11,22 @@
 |
 */
 
+use Epos\Models\Descuento;
 use Epos\Models\Producto;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Request;
 
-Route::get('/', 'WelcomeController@index');
+Route::get('welcome', 'WelcomeController@index');
 
-Route::get('home', 'HomeController@index');
+Route::get('/', 'HomeController@index');
 Route::post('productos/activar', 'ProductosController@activar');
 Route::post('productos/desactivar', 'ProductosController@desactivar');
 Route::resource('productos', 'ProductosController');
+Route::resource('descuentos', 'DescuentosController');
 
 Route::resource('ventas', 'VentasController');
 
+Route::post('desc_','DescuentosController@get_desc');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
@@ -37,9 +40,3 @@ Route::get('hola',function(){
     return response()->json($productos);
 });
 
-Route::post('send',function(Request $request){
-    if($request!= null)
-    {
-        return response()->json(Input::all());
-    }
-});

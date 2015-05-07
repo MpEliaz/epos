@@ -18,6 +18,7 @@ class CreateDescuentosTable extends Migration {
             $table->string('codigo_descuento');
             $table->string('titulo');
             $table->string('descripcion');
+            $table->integer('descuento');
             $table->integer('estado');
 			$table->timestamps();
 		});

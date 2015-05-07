@@ -37,7 +37,7 @@
     		    <tr>
     		@endif
 	                <td>{{$producto->id}}</td>
-	    			<td>{{$producto->nombre}}</td>
+	    			<td><strong>{{$producto->nombre}}</strong></td>
 	    			<td>{{$producto->descripcion_corta}}</td>
 	    			<td>{{$producto->marca}}</td>
 	    			<td>{{$producto->modelo}}</td>
@@ -46,7 +46,7 @@
 	    			<td>{{$producto->stock}}</td>
 	    			<td> @if($producto->estado === 1)<button onclick="desactivar_producto({{$producto->id}})" class="btn btn-danger">Desactivar</button>
                         @elseif ($producto->estado === 0)
-                            <button onclick="activar_producto({{$producto->id}})" class="btn btn-success">Activar</button>
+                            <button onclick="activar_descuento({{$producto->id}})" class="btn btn-success">Activar</button>
                         @endif</td>
                     <td><a href="{{route('productos.edit', $producto->id)}}" class="btn btn-primary">Modificar</a></td>
                 </tr>

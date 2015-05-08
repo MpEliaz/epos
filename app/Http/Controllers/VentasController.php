@@ -1,6 +1,9 @@
 <?php namespace Epos\Http\Controllers;
 
 use Epos\Http\Requests;
+use Epos\Models\Producto;
+use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Response;
 
 class VentasController extends Controller {
 
@@ -29,9 +32,11 @@ class VentasController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function store()
+	public function store(\Illuminate\Http\Request $request)
 	{
-		//
+        $productos = $request->all();
+        
+        return Response::json($request->all());
 	}
 
 	/**

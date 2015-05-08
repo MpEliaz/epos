@@ -35,7 +35,7 @@ Route::controllers([
 
 Route::get('hola',function(){
     $nombre = Input::get('nombre');
-    $productos = Producto::where('nombre', 'like', '%'.$nombre.'%')->get();
+    $productos = Producto::where('nombre', 'like', '%'.$nombre.'%')->where('estado','=',true)->get();
     //$productos = Producto::all();
     return response()->json($productos);
 });

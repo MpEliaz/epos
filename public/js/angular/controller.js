@@ -179,5 +179,11 @@ angular.module("ventasApp", ['ui.bootstrap', 'LocalStorageModule'])
             $scope.valorTotal = manejadorVenta.updateTotal();
         }
 
-
+        $scope.cerrarVenta = function () {
+            $http.post('http://localhost:8000/ventas',{
+                detalle_venta : $scope.productos
+            }).success(function (response) {
+                console.log(response);
+            });
+        }
     });

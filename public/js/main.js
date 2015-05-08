@@ -3,11 +3,11 @@ function activar_producto($id)
 {
     $.ajax({
         method: "POST",
-        url: "productos/activar",
+        url: "/productos/activar",
         headers:{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         data: { id: $id }
     })
-        .done(function( msg ) {
+        .success(function( msg ) {
             console.log(msg);
             location.reload();
         });
@@ -18,11 +18,11 @@ function desactivar_producto($id)
 {
     $.ajax({
         method: "POST",
-        url: "productos/desactivar",
+        url: "/productos/desactivar",
         headers:{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         data: { id: $id }
     })
-        .done(function( msg ) {
+        .success(function( msg ) {
             console.log(msg);
             location.reload();
         });
@@ -42,7 +42,7 @@ $("#margen").keyup(function(){
     precio_margen = parseInt($("#precio_neto").val())*((parseInt($("#margen").val())/100)+1);
     if(precio_margen!=0 && !isNaN(precio_margen) && precio_margen!="")
     {
-        precio_margen_iva = precio_margen*1.19;
+        precio_margen_iva = Math.round(precio_margen*1.19);
 
         if(precio_margen_iva!=0 && !isNaN(precio_margen_iva) && precio_margen_iva!="")
         {

@@ -1,6 +1,8 @@
 <?php namespace Epos\Http\Controllers;
 
 use Epos\Http\Requests;
+use Epos\Http\Requests\CreateProductoRequest;
+use Epos\Http\Requests\EditProductoRequest;
 use Epos\Models\Marca;
 use Epos\Models\Producto;
 use Illuminate\Support\Facades\Request;
@@ -53,20 +55,19 @@ class ProductosController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function store(Request $request)
+	public function store(CreateProductoRequest $request)
 	{
-        $producto = new Producto($request->all());
-        if ($producto->estado == 'on')
+
+        if ($request->estado == 'on')
         {
-            $producto->estado = true;
+            $request->estado = true;
         }
         else
         {
-            $producto->estado = false;
+            $request->estado = false;
         }
 
-        $producto->save();
-
+        $producto = Producto::create($request->all());
         return redirect()->route('productos.index');
         //return dd($producto);
 	}
@@ -104,10 +105,10 @@ class ProductosController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function update(EditProductoRequest $request, $id)
 	{
 		$producto = Producto::findOrFail($id);
-        $producto->fill(Request::all());
+        $producto->fill($request->all());
         if ($producto->estado == 'on')
         {
             $producto->estado = true;
@@ -118,7 +119,6 @@ class ProductosController extends Controller {
         }
         $producto->formatear_fecha();
         $producto->save();
-
         return redirect()->back()->with('message','Modificado correctamente');
 	}
 

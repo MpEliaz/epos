@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-
+    @include('productos.partials.mensajes')
     @if(session()->has('message'))
         <div class="alerta alert alert-success" role="alert">{{ session('message')}}</div>
     @endif

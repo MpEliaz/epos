@@ -121,6 +121,7 @@ angular.module("ventasApp", ['ui.bootstrap', 'LocalStorageModule'])
                     nombre: val
                 }
             }).then(function(response){
+                console.log(response);
                 return response.data.map(function(item){
                     return item;
                 });

@@ -10,7 +10,7 @@
                         <div class="row">
                             <div class="navbar-form navbar-left" role="search">
                                 <div class="form-group">
-                                    <input type="text" ng-model="searchText" placeholder="Busqueda de producto" typeahead="item.nombre for item in getLocation($viewValue)" typeahead-on-select="addProducto($item)" typeahead-loading="loadingLocations" class="form-control">
+                                    <input type="text" ng-model="searchText" placeholder="Busqueda de producto" typeahead="item.nombre for item in getLocation($item.codigo)" typeahead-on-select="addProducto($item)" typeahead-loading="loadingLocations" class="form-control">
                                     <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
                                 </div>
                                 <button class="btn btn-danger" ng-click="clearAll()">Eliminar Todo</button>

@@ -27,7 +27,7 @@ angular.module("ventasApp", ['ui.bootstrap', 'LocalStorageModule'])
             console.log(prod);
             angular.forEach(this.productos, function (item) {
                 if(prod.id == item.id){
-                    item.cant_venta = item.cant_venta+1;
+                    item.cant_venta = prod.cant_venta;
                     prod = null;
                 }
             });
@@ -178,23 +178,12 @@ angular.module("ventasApp", ['ui.bootstrap', 'LocalStorageModule'])
             $scope.descuentos = manejadorVenta.cleanDesc();
             $scope.valorTotal = manejadorVenta.updateTotal();
         }
+
         $scope.cerrarVenta = function () {
             $http.post('http://localhost:8000/ventas',{
                 detalle_venta : $scope.productos
             }).success(function (response) {
                 console.log(response);
-            });
-        }
-        $scope.codesearch = function () {
-            $code = $scope.searchcode
-            return $http.get('http://localhost:8000/search_code/', {
-                params: {
-                    codigo: $code
-                }
-            }).then(function(response){
-                console.log(response.data);
-                $scope.addProducto(response.data[0]);
-                $scope.searchcode ="";
             });
         }
     });

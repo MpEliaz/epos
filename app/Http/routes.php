@@ -11,9 +11,10 @@
 |
 */
 
+use Epos\Models\Descuento;
 use Epos\Models\Producto;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Request;
 
 Route::get('welcome', 'WelcomeController@index');
 
@@ -37,13 +38,5 @@ Route::get('hola',function(){
     $productos = Producto::where('nombre', 'like', '%'.$nombre.'%')->where('estado','=',true)->get();
     //$productos = Producto::all();
     return response()->json($productos);
-});
-
-Route::get('search_code', function(){
-    $codigo = Input::get('codigo');
-    $p = Producto::where('codigo','=',$codigo)->get();
-
-    return response()->json($p);
-
 });
 

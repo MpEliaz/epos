@@ -7,14 +7,6 @@ use Illuminate\Support\Facades\Response;
 
 class VentasController extends Controller {
 
-    protected $request;
-
-    public function __construct(Request $request)
-    {
-        $this->middleware('auth');
-        $this->request = $request;
-    }
-
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -43,7 +35,7 @@ class VentasController extends Controller {
 	public function store(\Illuminate\Http\Request $request)
 	{
         $productos = $request->all();
-
+        
         return Response::json($request->all());
 	}
 

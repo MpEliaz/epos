@@ -9,19 +9,12 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="navbar-form navbar-left" role="search">
-                                <form ng-submit="codesearch()">
-                                    <div class="form-group">
-                                        <label for="">Busqueda por codigo:</label>
-                                        <input type="text" ng-model="searchcode" placeholder="codigo de producto" class="form-control">
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="navbar-form navbar-left" role="search">
                                 <div class="form-group">
-                                    <label for="">Busqueda por nombre:</label>
-                                    <input type="text" ng-model="searchText" placeholder="nombre de producto" typeahead="item.nombre for item in getLocation($viewValue)" typeahead-on-select="addProducto($item)" typeahead-loading="loadingLocations" class="form-control">
+                                    <input type="text" ng-model="searchText" placeholder="Busqueda de producto" typeahead="item.nombre for item in getLocation($viewValue)" typeahead-on-select="addProducto($item)" typeahead-loading="loadingLocations" class="form-control">
                                     <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
                                 </div>
+                                <button class="btn btn-danger" ng-click="clearAll()">Eliminar Todo</button>
+                                <button class="btn btn-primary">Cerrar</button>
                             </div>
                         </div>
                         <div class="row detalle-venta">
@@ -76,7 +69,6 @@
                     </div>
                 </div>
                 <button class="btn btn-success" ng-click="cerrarVenta()">PAGAR</button>
-                <button class="btn btn-danger" ng-click="clearAll()">Eliminar Todo</button>
             </div>
         </div>
     </div>

@@ -11,10 +11,10 @@
 |
 */
 
-use Carbon\Carbon;
+use Epos\Models\Descuento;
 use Epos\Models\Producto;
-use Epos\Models\Venta;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Request;
 
 Route::get('welcome', 'WelcomeController@index');
 
@@ -35,21 +35,8 @@ Route::controllers([
 
 Route::get('hola',function(){
     $nombre = Input::get('nombre');
-    $productos = Producto::where('codigo', '=', $nombre)->where('estado','=',true)->get();
+    $productos = Producto::where('nombre', 'like', '%'.$nombre.'%')->where('estado','=',true)->get();
     //$productos = Producto::all();
     return response()->json($productos);
-});
-
-Route::get('mundo', function(){
-    $venta_data = array(
-        'nro_venta' 	=> 0,
-        'fecha_venta' => Carbon::now(),
-        'tipo_pago' => 'contado',
-        'estado_venta' => 1,
-        'total_venta' => 0,
-        'id_vendedor' => null,
-        'id_cliente' => null
-    );
-    $venta = Venta::create($venta_data);
 });
 

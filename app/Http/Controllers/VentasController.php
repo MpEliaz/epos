@@ -1,11 +1,20 @@
 <?php namespace Epos\Http\Controllers;
 
-use Epos\Http\Requests;
+use Carbon\Carbon;
 use Epos\Models\Producto;
+use Epos\Models\Venta;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Response;
 
 class VentasController extends Controller {
+
+    protected $request;
+
+    public function __construct(Request $request)
+    {
+        $this->middleware('auth');
+        $this->request = $request;
+    }
 
 	/**
 	 * Display a listing of the resource.
@@ -32,11 +41,29 @@ class VentasController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function store(\Illuminate\Http\Request $request)
+	public function store(Request $request)
 	{
         $productos = $request->all();
+
+        $productos = $productos['detalle_venta'];
+        $venta_data = array(
+            'nro_venta' 	=> 0,
+            'fecha_venta' => Carbon::now(),
+            'tipo_pago' => 'contado',
+            'estado_venta' => 1,
+            'total_venta' => 0,
+            'id_vendedor' => null,
+            'id_cliente' => null
+        );
+        $venta = Venta::create($venta_data);
+        foreach($productos as $p){
+            $venta->productos()->attach($p['id'], ['cantidad'=>$p['cant_venta']]);
+
+        }
+
+        return Response::json($venta);
         
-        return Response::json($request->all());
+
 	}
 
 	/**

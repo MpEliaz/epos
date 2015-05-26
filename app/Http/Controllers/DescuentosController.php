@@ -7,6 +7,14 @@ use Illuminate\Support\Facades\Request;
 
 class DescuentosController extends Controller {
 
+    protected $request;
+
+    public function __construct(Request $request)
+    {
+        $this->middleware('auth');
+        $this->request = $request;
+    }
+
 	/**
 	 * Display a listing of the resource.
 	 *

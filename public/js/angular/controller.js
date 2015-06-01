@@ -25,15 +25,19 @@ angular.module("ventasApp", ['ui.bootstrap', 'LocalStorageModule'])
         }
         this.add = function (prod) {
             console.log(prod);
-            angular.forEach(this.productos, function (item) {
-                if(prod.id == item.id){
-                    item.cant_venta = item.cant_venta+1;
-                    prod = null;
-                }
-            });
-            if(prod!= null){this.productos.push(prod);}
-            this.updateLocalStorage();
-            this.updateTotal();
+                angular.forEach(this.productos, function (item) {
+                    if(prod.id == item.id){
+                        if(item.cant_venta < item.stock)
+                        {
+                            item.cant_venta = item.cant_venta+1;
+                        }
+                        prod = null;
+                    }
+                });
+
+                if(prod!= null){this.productos.push(prod);}
+                this.updateLocalStorage();
+                this.updateTotal();
         };
         this.updateLocalStorage = function () {
             console.log("actualizado");
@@ -151,20 +155,30 @@ angular.module("ventasApp", ['ui.bootstrap', 'LocalStorageModule'])
             $scope.productos = manejadorVenta.removeItem(item);
             $scope.valorTotal = manejadorVenta.getValorTotal();
         };
-        $scope.updateCantProd = function () {
+        $scope.updateCantProd = function (prod) {
 
-            manejadorVenta.updateLocalStorage();
-            manejadorVenta.updateTotal();
-            $scope.valorTotal = manejadorVenta.getValorTotal();
+            if(prod.cant_venta <= prod.stock)
+            {
+                manejadorVenta.updateLocalStorage();
+                manejadorVenta.updateTotal();
+                $scope.valorTotal = manejadorVenta.getValorTotal();
+            }
+            else
+            {
+                prod.cant_venta = prod.stock;
+                manejadorVenta.updateLocalStorage();
+                manejadorVenta.updateTotal();
+                $scope.valorTotal = manejadorVenta.getValorTotal();
+            }
         };
-        $scope.cerrarVenta = function () {
+/*        $scope.cerrarVenta = function () {
            productos = manejadorVenta.cerrarVenta();
             $http.post('http://localhost:8000/send/', {
                 params: productos
             }).success(function(response){
                 console.log(response);
             });
-        };
+        };*/
         $scope.buscarDescuento = function () {
             val = $scope.desc_seach;
             return $http.post('http://localhost:8000/desc_/', {
@@ -174,18 +188,23 @@ angular.module("ventasApp", ['ui.bootstrap', 'LocalStorageModule'])
                 $scope.descuentos = manejadorVenta.agregarDescuento(response);
                 $scope.valorTotal = manejadorVenta.updateTotal();
             });
-        }
+        };
         $scope.clearDesc = function () {
             $scope.descuentos = manejadorVenta.cleanDesc();
             $scope.valorTotal = manejadorVenta.updateTotal();
-        }
+        };
         $scope.cerrarVenta = function () {
-            $http.post('http://localhost:8000/ventas',{
-                detalle_venta : $scope.productos
-            }).success(function (response) {
-                console.log(response);
-            });
-        }
+            if($scope.paga_con >= manejadorVenta.getValorTotal()){
+                $http.post('http://localhost:8000/ventas',{
+                    detalle_venta : $scope.productos,
+                    total : manejadorVenta.getValorTotal(),
+                    paga_con : $scope.pagacon,
+                    tipo_pago : $scope.tipo_pago
+                }).success(function (response) {
+                    console.log(response);
+                });
+            }
+        };
         $scope.codesearch = function () {
             $code = $scope.searchcode
             return $http.get('http://localhost:8000/search_code/', {

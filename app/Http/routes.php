@@ -22,10 +22,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('welcome', 'WelcomeController@index');
 
-Route::get('/', 'HomeController@index');
+Route::get('/', 'VentasController@index');
 Route::post('productos/activar', 'ProductosController@activar');
 Route::post('productos/desactivar', 'ProductosController@desactivar');
 Route::resource('productos', 'ProductosController');
+Route::post('descuento/activar', 'DescuentosController@activar');
+Route::post('descuento/desactivar', 'DescuentosController@desactivar');
 Route::resource('descuentos', 'DescuentosController');
 
 Route::resource('ventas', 'VentasController');
@@ -39,7 +41,7 @@ Route::controllers([
 
 Route::get('hola',function(){
     $nombre = Input::get('nombre');
-    $productos = Producto::where('codigo', '=', $nombre)->where('estado','=',true)->get();
+    $productos = Producto::where('nombre', 'like', '%'.$nombre.'%')->where('estado','=',true)->get();
     //$productos = Producto::all();
     return response()->json($productos);
 });

@@ -29,6 +29,36 @@ function desactivar_producto($id)
 
 }
 
+function activar_descuento($id)
+{
+    $.ajax({
+        method: "POST",
+        url: "/descuento/activar",
+        headers:{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        data: { id: $id }
+    })
+        .success(function( msg ) {
+            console.log(msg);
+            location.reload();
+        });
+
+}
+
+function desactivar_descuento($id)
+{
+    $.ajax({
+        method: "POST",
+        url: "/descuento/desactivar",
+        headers:{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        data: { id: $id }
+    })
+        .success(function( msg ) {
+            console.log(msg);
+            location.reload();
+        });
+
+}
+
 $('.fecha-picker').datepicker({
     language: "es"
 });

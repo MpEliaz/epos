@@ -12,7 +12,7 @@
                                 <form ng-submit="codesearch()">
                                     <div class="form-group">
                                         <label for="">Busqueda por codigo:</label>
-                                        <input type="text" ng-model="searchcode" placeholder="codigo de producto" class="form-control">
+                                        <input type="text" ng-model="searchcode" placeholder="codigo de producto" class="form-control" autofocus tabindex="1">
                                     </div>
                                 </form>
                             </div>
@@ -39,7 +39,7 @@
                                 <tr ng-repeat="prod in productos">
                                     <td>@{{ prod.nombre }}</td>
                                     <td>@{{ prod.descripcion_corta }}</td>
-                                    <td><input class="cant_prod form-control" type="number" min="1" ng-model="prod.cant_venta" ng-change="updateCantProd()" value="@{{prod.cant_venta}}"/></td>
+                                    <td><input class="cant_prod form-control" type="number" min="1" ng-model="prod.cant_venta" ng-change="updateCantProd(prod)" value="@{{prod.cant_venta}}"/></td>
                                     <td>@{{ prod.precio_venta | currency:undefined:0 }}</td>
                                     <td><i ng-click="removeProd(prod)" class="fa fa-trash-o"></i></td>
                                 </tr>
@@ -63,10 +63,13 @@
                     <div class="panel-body">
                         <div class="form-inline">
                             <label for=""><strong>Agregar Codigo Descuento:</strong></label>
-                            <div class="form-group">
-                                <input type="text" ng-model="desc_seach" class="form-control"/>
-                                <button class="btn btn-primary" ng-click="buscarDescuento()">agregar</button>
-                            </div>
+
+                            <form ng-submit="buscarDescuento()">
+                                <div class="form-group">
+                                    <input type="text" ng-model="desc_seach" class="form-control"/>
+                                    <button class="btn btn-primary">agregar</button>
+                                </div>
+                            </form>
                         </div>
                         <br/>
                         <ul class="list-group" ng-repeat="desc in descuentos">
@@ -75,10 +78,44 @@
                         </ul>
                     </div>
                 </div>
-                <button class="btn btn-success" ng-click="cerrarVenta()">PAGAR</button>
+                <button class="btn btn-success" data-toggle="modal" data-target="#paymodal" tabindex="2">PAGAR</button>
                 <button class="btn btn-danger" ng-click="clearAll()">Eliminar Todo</button>
             </div>
         </div>
-    </div>
+        <!-- start pay modal -->
+        <div class="modal fade" id="paymodal" tabindex="-10" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Ultimo Paso - Pagar</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form ng-submit="cerrarVenta()">
+                            <div class="row">
+                                @{{ valorTotal }}
+                                <div class="col-md-6">
+                                    <label for=""><strong>Cancela con:</strong></label>
+                                    <input type="text" ng-model="pagacon" class="form-control" autofocus/>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for=""><strong>Tipo pago:</strong></label>
+                                    <div class="row">
+                                        <label class="tipo_pago"><input ng-model="tipo_pago" name="tipo_pago" value="contado" type="radio" checked>Contado </label>
+                                        <label class="tipo_pago"><input ng-model="tipo_pago" name="tipo_pago" value="debito" type="radio">Debito </label>
+                                        <label class="tipo_pago"><input ng-model="tipo_pago" name="tipo_pago" value="credito" type="radio">Credito </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Volver</button>
+                        <button type="button" class="btn btn-success" ng-click="cerrarVenta()">Terminar venta</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end pay modal -->
     </div>
 @endsection

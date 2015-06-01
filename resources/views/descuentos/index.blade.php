@@ -1,4 +1,4 @@
-@extends('app')
+    @extends('app')
 
 @section('content')
 <h2 class="text-center">Descuentos</h2><br>
@@ -31,9 +31,9 @@
 	    			<td><strong>{{$desc->codigo_descuento}}</strong></td>
 	    			<td>{{$desc->titulo}}</td>
 	    			<td>{{$desc->descripcion}}</td>
-	    			<td> @if($desc->estado === 1)<button onclick="desactivar_producto({{$desc->id}})" class="btn btn-danger">Desactivar</button>
+	    			<td> @if($desc->estado === 1)<button onclick="desactivar_descuento({{$desc->id}})" class="btn btn-danger">Desactivar</button>
                         @elseif ($desc->estado === 0)
-                            <button onclick="activar_producto({{$desc->id}})" class="btn btn-success">Activar</button>
+                            <button onclick="activar_descuento({{$desc->id}})" class="btn btn-success">Activar</button>
                         @endif</td>
                     <td><a href="{{route('descuentos.edit', $desc->id)}}" class="btn btn-primary">Modificar</a></td>
                 </tr>

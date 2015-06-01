@@ -2,8 +2,10 @@
 
 use Epos\Http\Requests;
 use Epos\Http\Controllers\Controller;
+use Epos\Http\Requests\CreateDescuentoRequest;
 use Epos\Models\Descuento;
 use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Response;
 
 class DescuentosController extends Controller {
 
@@ -33,7 +35,7 @@ class DescuentosController extends Controller {
 	 */
 	public function create()
 	{
-		//
+		return view('descuentos.nuevo');
 	}
 
 	/**
@@ -41,9 +43,20 @@ class DescuentosController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function store()
+	public function store(CreateDescuentoRequest $request)
 	{
-		//
+        if ($request->estado == 'on')
+        {
+            $request->estado = true;
+        }
+        else
+        {
+            $request->estado = false;
+        }
+
+        $descuento = Descuento::create($request->all());
+        return redirect()->route('descuentos.index');
+        //return dd($descuento);
 	}
 
 	/**
@@ -80,17 +93,18 @@ class DescuentosController extends Controller {
 	{
         $desc = Descuento::findOrFail($id);
         $desc->fill(Request::all());
-        if ($desc->estado == 'on')
-        {
-            $desc->estado = true;
-        }
-        else
-        {
-            $desc->estado = false;
-        }
-        $desc->save();
+        //return dd(Request::all());
+                if ($desc->estado == 'on')
+                {
+                    $desc->estado = true;
+                }
+                else
+                {
+                    $desc->estado = false;
+                }
+                $desc->save();
 
-        return redirect()->back()->with('message','Modificado correctamente');
+                return redirect()->back()->with('message','Modificado correctamente');
 	}
 
 	/**
@@ -110,6 +124,34 @@ class DescuentosController extends Controller {
         $desc = Descuento::where('codigo_descuento','=',$descuento)->get();
         return response()->json($desc);
 
+    }
+
+    public function activar()
+    {
+        if(Request::ajax())
+        {
+            $id = Request::get('id');
+
+            $descuento = Descuento::findOrFail($id);
+            $descuento->estado = true;
+            $descuento->save();
+            return Response::json($descuento);
+        }
+        return false;
+    }
+
+    public function desactivar()
+    {
+        if(Request::ajax())
+        {
+            $id = Request::get('id');
+
+            $descuento = Descuento::findOrFail($id);
+            $descuento->estado = false;
+            $descuento->save();
+            return Response::json($descuento);
+        }
+        return false;
     }
 
 }

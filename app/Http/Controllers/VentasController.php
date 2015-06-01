@@ -1,7 +1,6 @@
 <?php namespace Epos\Http\Controllers;
 
 use Carbon\Carbon;
-use Epos\Models\Producto;
 use Epos\Models\Venta;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Response;
@@ -10,10 +9,9 @@ class VentasController extends Controller {
 
     protected $request;
 
-    public function __construct(Request $request)
+    public function __construct()
     {
         $this->middleware('auth');
-        $this->request = $request;
     }
 
 	/**
@@ -41,28 +39,35 @@ class VentasController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function store(Request $request)
+	public function store()
 	{
-        $productos = $request->all();
-
-        $productos = $productos['detalle_venta'];
-        $venta_data = array(
+        $data = Request::all();
+        $tipo_pago = $data['tipo_pago'];
+        $total_venta = $data['total'];
+        $productos = $data['detalle_venta'];
+        $datos_venta = array(
             'nro_venta' 	=> 0,
             'fecha_venta' => Carbon::now(),
-            'tipo_pago' => 'contado',
+            'tipo_pago' => $tipo_pago,
             'estado_venta' => 1,
-            'total_venta' => 0,
+            'total_venta' => $total_venta,
             'id_vendedor' => null,
             'id_cliente' => null
         );
-        $venta = Venta::create($venta_data);
-        foreach($productos as $p){
-            $venta->productos()->attach($p['id'], ['cantidad'=>$p['cant_venta']]);
+        $venta = Venta::create($datos_venta);
+        if($venta != null)
+        {
+            foreach($productos as $p){
+                $venta->productos()->attach($p['id'], ['cantidad'=>$p['cant_venta']]);
 
+            }
+
+            return Response::json(['id_venta'=>$venta->id, 'estado'=>'OK']);
+        }
+        else{
+            return Response::json(['estado'=>'No']);
         }
 
-        return Response::json($venta);
-        
 
 	}
 

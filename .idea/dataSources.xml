@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="2193461590">
+  <component name="DataSourceManagerImpl" format="xml" hash="876934182">
     <data-source source="LOCAL" name="MySQL - eposdb@localhost" uuid="6bb7a9fd-1f9c-4325-aa0e-34b001ca31ce">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>

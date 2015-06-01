@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('welcome', 'WelcomeController@index');
 
 Route::get('/', 'VentasController@index');
+Route::get('all_ventas', 'VentasController@showVentas');
 Route::post('productos/activar', 'ProductosController@activar');
 Route::post('productos/desactivar', 'ProductosController@desactivar');
 Route::resource('productos', 'ProductosController');

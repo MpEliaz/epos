@@ -11,6 +11,6 @@ class Venta extends Model{
 
     public function productos()
     {
-        return  $this->belongsToMany('Epos\Models\Producto','venta_detalle')->withTimestamps();
+        return  $this->belongsToMany('Epos\Models\Producto','venta_detalle')->withTimestamps()->withPivot('cantidad');
     }
 }

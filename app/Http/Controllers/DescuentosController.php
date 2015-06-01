@@ -25,7 +25,8 @@ class DescuentosController extends Controller {
 	public function index()
 	{
 		$descuentos = Descuento::all();
-        return view('descuentos.index', compact('descuentos'));
+        $total = count($descuentos);
+        return view('descuentos.index', compact('descuentos','total'));
 	}
 
 	/**

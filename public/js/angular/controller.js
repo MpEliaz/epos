@@ -40,12 +40,14 @@ angular.module("ventasApp", ['ui.bootstrap', 'LocalStorageModule'])
                 this.updateTotal();
         };
         this.updateLocalStorage = function () {
-            console.log("actualizado");
+
             localStorageService.set(this.key, this.productos);
+            console.log("productos actualizados");
         };
         this.updateDescuento = function () {
-            console.log("actualizado");
+
             localStorageService.set(this.desckey, this.descuentos);
+            console.log("descuentos actualizados");
         };
         this.updateTotal = function () {
             var subtotal = 0;
@@ -198,11 +200,15 @@ angular.module("ventasApp", ['ui.bootstrap', 'LocalStorageModule'])
                 $http.post('http://localhost:8000/ventas',{
                     detalle_venta : $scope.productos,
                     total : manejadorVenta.getValorTotal(),
-                    paga_con : $scope.pagacon,
+                    paga_con : $scope.paga_con,
                     tipo_pago : $scope.tipo_pago
                 }).success(function (response) {
                     console.log(response);
                 });
+            }
+            else
+            {
+                    $('#paymodal').modal('hide');
             }
         };
         $scope.codesearch = function () {

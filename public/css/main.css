@@ -10,3 +10,14 @@
 .cant_prod{
     width: 60px;
 }
+.hiddenRow {
+    padding: 0 !important;
+}
+.tabla_ventas{
+    background-color: #A6BEA4 !important;
+
+}
+.venta_detalle_table{
+    background-color: #E2E8C0 !important;
+    margin-bottom: 0px !important;
+}

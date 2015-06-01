@@ -17,7 +17,7 @@ class CreateVentaTable extends Migration {
 
             $table->increments('id');
             $table->integer('nro_venta');
-            $table->date('fecha_venta');
+            $table->datetime('fecha_venta');
             $table->string('tipo_pago');
             $table->integer('estado_venta');
             $table->integer('total_venta');

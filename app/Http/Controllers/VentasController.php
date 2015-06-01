@@ -14,6 +14,14 @@ class VentasController extends Controller {
         $this->middleware('auth');
     }
 
+    public function showVentas()
+    {
+        $ventas = Venta::with('productos')->get();
+
+        return view('ventas.all', compact('ventas'));
+        //return Response::json($ventas);
+    }
+
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -44,6 +52,8 @@ class VentasController extends Controller {
         $data = Request::all();
         $tipo_pago = $data['tipo_pago'];
         $total_venta = $data['total'];
+        $paga_con = $data['paga_con'];
+        $vuelto = 0;
         $productos = $data['detalle_venta'];
         $datos_venta = array(
             'nro_venta' 	=> 0,
@@ -54,7 +64,14 @@ class VentasController extends Controller {
             'id_vendedor' => null,
             'id_cliente' => null
         );
-        $venta = Venta::create($datos_venta);
+
+        $venta = null;
+        if($paga_con >= $total_venta)
+        {
+            $venta = Venta::create($datos_venta);
+        }
+
+
         if($venta != null)
         {
             foreach($productos as $p){
@@ -62,7 +79,9 @@ class VentasController extends Controller {
 
             }
 
-            return Response::json(['id_venta'=>$venta->id, 'estado'=>'OK']);
+            if($paga_con>$total_venta){$vuelto = $paga_con-$total_venta;}
+
+            return Response::json(['id_venta'=>$venta->id,'vuelto'=>$vuelto, 'estado'=>'OK']);
         }
         else{
             return Response::json(['estado'=>'No']);

@@ -79,7 +79,7 @@
                     </div>
                 </div>
                 <button class="btn btn-success" data-toggle="modal" data-target="#paymodal" tabindex="2">PAGAR</button>
-                <button class="btn btn-danger" ng-click="clearAll()">Eliminar Todo</button>
+                <button class="btn btn-danger" ng-click="clearAll()">LIMPIAR</button>
             </div>
         </div>
         <!-- start pay modal -->
@@ -88,20 +88,20 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Ultimo Paso - Pagar</h4>
+                        <h4 class="modal-title" id="myModalLabel">Ultimo Paso - Pagar total: @{{ valorTotal }}</h4>
                     </div>
                     <div class="modal-body">
                         <form ng-submit="cerrarVenta()">
                             <div class="row">
-                                @{{ valorTotal }}
+
                                 <div class="col-md-6">
                                     <label for=""><strong>Cancela con:</strong></label>
-                                    <input type="text" ng-model="pagacon" class="form-control" autofocus/>
+                                    <input type="number" ng-model="paga_con" class="form-control" autofocus/>
                                 </div>
                                 <div class="col-md-6">
                                     <label for=""><strong>Tipo pago:</strong></label>
                                     <div class="row">
-                                        <label class="tipo_pago"><input ng-model="tipo_pago" name="tipo_pago" value="contado" type="radio" checked>Contado </label>
+                                        <label class="tipo_pago"><input ng-model="tipo_pago" name="tipo_pago" value="contado" type="radio">Contado </label>
                                         <label class="tipo_pago"><input ng-model="tipo_pago" name="tipo_pago" value="debito" type="radio">Debito </label>
                                         <label class="tipo_pago"><input ng-model="tipo_pago" name="tipo_pago" value="credito" type="radio">Credito </label>
                                     </div>

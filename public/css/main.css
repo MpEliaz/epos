@@ -1,3 +1,7 @@
+body{
+
+    background-color: #6F6E6E !important;
+}
 .stock-bajo-table{
     background-color: rgba(255, 0, 0, 0.35);
 }
@@ -20,4 +24,16 @@
 .venta_detalle_table{
     background-color: #E2E8C0 !important;
     margin-bottom: 0px !important;
+}
+.tipo_pago{
+    margin-right: 10px;
+}
+
+.input_warning{
+    background-color: #FFE5E5;
+    border-color: #F00;
+}
+
+.oculto{
+    display: none;
 }

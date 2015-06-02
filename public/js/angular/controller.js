@@ -120,7 +120,7 @@ angular.module("ventasApp", ['ui.bootstrap', 'LocalStorageModule'])
 
     })
     .controller("VentasController", function($scope, $http, manejadorVenta){
-
+        $scope.tipo_pago = "contado";
         $scope.getLocation = function(val) {
             return $http.get('http://localhost:8000/hola/', {
                 params: {
@@ -203,12 +203,19 @@ angular.module("ventasApp", ['ui.bootstrap', 'LocalStorageModule'])
                     paga_con : $scope.paga_con,
                     tipo_pago : $scope.tipo_pago
                 }).success(function (response) {
-                    console.log(response);
+                    if(response.estado == "OK")
+                    {
+
+                    }
                 });
             }
             else
             {
-                    $('#paymodal').modal('hide');
+                   // $('#paymodal').modal('hide');
+                    $("#in").addClass("input_warning");
+                    $("#msj_monto").show();
+                    $('#in').focus()
+                     $('#in').val("");
             }
         };
         $scope.codesearch = function () {

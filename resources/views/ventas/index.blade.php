@@ -78,7 +78,7 @@
                         </ul>
                     </div>
                 </div>
-                <button class="btn btn-success" data-toggle="modal" data-target="#paymodal" tabindex="2">PAGAR</button>
+                <button id="prepay" class="btn btn-success" data-toggle="modal" data-target="#paymodal" tabindex="2">PAGAR</button>
                 <button class="btn btn-danger" ng-click="clearAll()">LIMPIAR</button>
             </div>
         </div>
@@ -91,31 +91,80 @@
                         <h4 class="modal-title" id="myModalLabel">Ultimo Paso - Pagar total: @{{ valorTotal }}</h4>
                     </div>
                     <div class="modal-body">
-                        <form ng-submit="cerrarVenta()">
-                            <div class="row">
-
-                                <div class="col-md-6">
-                                    <label for=""><strong>Cancela con:</strong></label>
-                                    <input type="number" ng-model="paga_con" class="form-control" autofocus/>
+                        <form ng-submit="cerrarVenta()" class="form-horizontal">
+                            <div class="form-group">
+                                <label for="" class="col-sm-3 control-label"><strong>Cancela con:</strong></label>
+                                <div class="col-sm-9">
+                                    <input id="in" type="number" ng-model="paga_con" class="form-control" autofocus/>
+                                    <p id="msj_monto" style="display: none"><strong>Monto Insuficiente</strong></p>
                                 </div>
-                                <div class="col-md-6">
-                                    <label for=""><strong>Tipo pago:</strong></label>
-                                    <div class="row">
-                                        <label class="tipo_pago"><input ng-model="tipo_pago" name="tipo_pago" value="contado" type="radio">Contado </label>
-                                        <label class="tipo_pago"><input ng-model="tipo_pago" name="tipo_pago" value="debito" type="radio">Debito </label>
-                                        <label class="tipo_pago"><input ng-model="tipo_pago" name="tipo_pago" value="credito" type="radio">Credito </label>
-                                    </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="" class="col-sm-3 control-label"><strong>Tipo pago:</strong></label>
+                                <div class="col-sm-9">
+                                    <label class="tipo_pago"><input ng-model="tipo_pago" name="tipo_pago" value="contado" type="radio">Contado </label>
+                                    <label class="tipo_pago"><input ng-model="tipo_pago" name="tipo_pago" value="debito" type="radio">Debito </label>
+                                    <label class="tipo_pago"><input ng-model="tipo_pago" name="tipo_pago" value="credito" type="radio">Credito </label>
                                 </div>
                             </div>
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Volver</button>
+                        <button type="button" class="btn btn-warning" data-dismiss="modal">Volver</button>
                         <button type="button" class="btn btn-success" ng-click="cerrarVenta()">Terminar venta</button>
                     </div>
                 </div>
             </div>
         </div>
         <!-- end pay modal -->
+        <!-- start final pay modal -->
+        <div class="modal fade" id="endmodal" tabindex="-10" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Ultimo Paso - Pagar total: @{{ valorTotal }}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form ng-submit="cerrarVenta()" class="form-horizontal">
+                            <div class="form-group">
+                                <label for="" class="col-sm-3 control-label"><strong>Cancela con:</strong></label>
+                                <div class="col-sm-9">
+                                    <input id="in" type="number" ng-model="paga_con" class="form-control"/>
+                                    <p id="msj_monto" style="display: none"><strong>Monto Insuficiente</strong></p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="" class="col-sm-3 control-label"><strong>Tipo pago:</strong></label>
+                                <div class="col-sm-9">
+                                    <label class="tipo_pago"><input ng-model="tipo_pago" name="tipo_pago" value="contado" type="radio">Contado </label>
+                                    <label class="tipo_pago"><input ng-model="tipo_pago" name="tipo_pago" value="debito" type="radio">Debito </label>
+                                    <label class="tipo_pago"><input ng-model="tipo_pago" name="tipo_pago" value="credito" type="radio">Credito </label>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-warning" data-dismiss="modal">Volver</button>
+                        <button type="button" class="btn btn-success" ng-click="cerrarVenta()">Terminar venta</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end final pay modal -->
     </div>
+@endsection
+
+@section('scripts')
+    @parent
+    <script>
+        $('#in').keypress(function(){
+            $("#in").removeClass("input_warning");
+            $("#msj_monto").hide();
+        });
+
+        $('#paymodal').on('shown.bs.modal', function () {
+            $('#in').focus();
+        });
+    </script>
 @endsection

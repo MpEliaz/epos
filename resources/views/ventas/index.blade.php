@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-md-8">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Venta</div>
+                    <div class="panel-heading"><strong>Detalle productos</strong></div>
                     <div class="panel-body">
                         <div class="row">
                             <div class="navbar-form navbar-left" role="search">
@@ -51,7 +51,7 @@
             </div>
             <div class="col-md-4">
                 <div class="panel panel-default">
-                    <div class="panel-heading">TOTAL</div>
+                    <div class="panel-heading"><strong>Total</strong></div>
                     <div class="panel-body">
                         <div class=" panel panel-default total-venta text-center">
                             <h1><strong>@{{ valorTotal | currency:undefined:0 }}</strong></h1>
@@ -59,7 +59,7 @@
                     </div>
                 </div>
                 <div class="panel panel-default">
-                    <div class="panel-heading">Descuentos</div>
+                    <div class="panel-heading"><strong>Descuentos</strong></div>
                     <div class="panel-body">
                         <div class="form-inline">
                             <label for=""><strong>Agregar Codigo Descuento:</strong></label>
@@ -123,30 +123,27 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Ultimo Paso - Pagar total: @{{ valorTotal }}</h4>
+                        <h4 class="modal-title" id="myModalLabel">Paso Final</h4>
                     </div>
                     <div class="modal-body">
-                        <form ng-submit="cerrarVenta()" class="form-horizontal">
-                            <div class="form-group">
-                                <label for="" class="col-sm-3 control-label"><strong>Cancela con:</strong></label>
-                                <div class="col-sm-9">
-                                    <input id="in" type="number" ng-model="paga_con" class="form-control"/>
-                                    <p id="msj_monto" style="display: none"><strong>Monto Insuficiente</strong></p>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="" class="col-sm-3 control-label"><strong>Tipo pago:</strong></label>
-                                <div class="col-sm-9">
-                                    <label class="tipo_pago"><input ng-model="tipo_pago" name="tipo_pago" value="contado" type="radio">Contado </label>
-                                    <label class="tipo_pago"><input ng-model="tipo_pago" name="tipo_pago" value="debito" type="radio">Debito </label>
-                                    <label class="tipo_pago"><input ng-model="tipo_pago" name="tipo_pago" value="credito" type="radio">Credito </label>
-                                </div>
-                            </div>
-                        </form>
+                        <h3 class="text-center">Venta terminada con éxito.</h3><br/>
+                        <table style="width: 100%;">
+                            <tr>
+                                <td><h4>Cliente pago con:</h4></td>
+                                <td><h4>@{{ _paga_con | currency:undefined:0}}</h4></td>
+                            </tr>
+                            <tr>
+                                <td><h4>Total venta:</h4></td>
+                                <td><h4>@{{ _valorTotal | currency:undefined:0}}</h4></td>
+                            </tr>
+                            <tr>
+                                <td><h4>Vuelto:</h4></td>
+                                <td><h4>@{{ _vuelto | currency:undefined:0}}</h4></td>
+                            </tr>
+                        </table>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-warning" data-dismiss="modal">Volver</button>
-                        <button type="button" class="btn btn-success" ng-click="cerrarVenta()">Terminar venta</button>
+                        <button class="btn btn-success" data-dismiss="modal">Finalizar</button>
                     </div>
                 </div>
             </div>
@@ -158,6 +155,7 @@
 @section('scripts')
     @parent
     <script>
+        //$('#endmodal').modal('show');
         $('#in').keypress(function(){
             $("#in").removeClass("input_warning");
             $("#msj_monto").hide();

@@ -120,7 +120,7 @@ angular.module("ventasApp", ['ui.bootstrap', 'LocalStorageModule'])
 
     })
     .controller("VentasController", function($scope, $http, manejadorVenta){
-        $scope.tipo_pago = "contado";
+
         $scope.getLocation = function(val) {
             return $http.get('http://localhost:8000/hola/', {
                 params: {
@@ -134,6 +134,10 @@ angular.module("ventasApp", ['ui.bootstrap', 'LocalStorageModule'])
             });
         };
 
+        $scope.tipo_pago = "contado";
+        $scope._valorTotal = 0;
+        $scope._vuelto = 0;
+        $scope._paga_con = 0;
         $scope.valorTotal = manejadorVenta.getValorTotal();
         $scope.productos = manejadorVenta.getAll();
         $scope.descuentos = manejadorVenta.getAlldesc();
@@ -205,17 +209,23 @@ angular.module("ventasApp", ['ui.bootstrap', 'LocalStorageModule'])
                 }).success(function (response) {
                     if(response.estado == "OK")
                     {
+                        $('#paymodal').modal('hide');
+                        $('#endmodal').modal('show');
+                        $scope._vuelto = response.vuelto;
+                        $scope._valorTotal = manejadorVenta.getValorTotal();
+                        $scope._paga_con = $scope.paga_con;
+                        $scope.paga_con = 0;
+                        $scope.clearAll();
 
                     }
                 });
             }
             else
             {
-                   // $('#paymodal').modal('hide');
-                    $("#in").addClass("input_warning");
-                    $("#msj_monto").show();
-                    $('#in').focus()
-                     $('#in').val("");
+                $("#in").addClass("input_warning");
+                $("#msj_monto").show();
+                $('#in').focus()
+                $('#in').val("");
             }
         };
         $scope.codesearch = function () {

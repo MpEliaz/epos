@@ -31,4 +31,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	 */
 	protected $hidden = ['password', 'remember_token'];
 
+    public function ventas()
+    {
+        return  $this->hasMany('Epos\Models\Venta', 'id]]_vendedor');
+    }
+
 }

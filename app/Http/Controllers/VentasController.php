@@ -2,6 +2,7 @@
 
 use Carbon\Carbon;
 use Epos\Models\Venta;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Response;
 
@@ -59,9 +60,9 @@ class VentasController extends Controller {
             'nro_venta' 	=> 0,
             'fecha_venta' => Carbon::now(),
             'tipo_pago' => $tipo_pago,
-            'estado_venta' => 1,
+            'estado_venta' => 'finalizado',
             'total_venta' => $total_venta,
-            'id_vendedor' => null,
+            'id_vendedor' => Auth::user()->id,
             'id_cliente' => null
         );
 

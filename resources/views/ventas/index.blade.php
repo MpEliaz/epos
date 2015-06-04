@@ -51,11 +51,9 @@
             </div>
             <div class="col-md-4">
                 <div class="panel panel-default">
-                    <div class="panel-heading"><strong>Total</strong></div>
+                    {{--<div class="panel-heading"><strong>Total</strong></div>--}}
                     <div class="panel-body">
-                        <div class=" panel panel-default total-venta text-center">
-                            <h1><strong>@{{ valorTotal | currency:undefined:0 }}</strong></h1>
-                        </div>
+                        <h1 class="text-center"><strong>@{{ valorTotal | currency:undefined:0 }}</strong></h1>
                     </div>
                 </div>
                 <div class="panel panel-default">
@@ -78,8 +76,8 @@
                         </ul>
                     </div>
                 </div>
-                <button id="prepay" class="btn btn-success" data-toggle="modal" data-target="#paymodal" tabindex="2">PAGAR</button>
-                <button class="btn btn-danger" ng-click="clearAll()">LIMPIAR</button>
+                <button id="prepay" class="btn btn-success btn-lg btn-block" data-toggle="modal" data-target="#paymodal" tabindex="2">PAGAR</button>
+                <button class="btn btn-danger btn-lg btn-block" ng-click="clearAll()">LIMPIAR</button>
             </div>
         </div>
         <!-- start pay modal -->
@@ -88,7 +86,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Ultimo Paso - Pagar total: @{{ valorTotal }}</h4>
+                        <h4 class="modal-title" id="myModalLabel"><i class="fa fa-shopping-cart"></i> Total de la venta: @{{ valorTotal | currency:undefined:0 }}</h4>
                     </div>
                     <div class="modal-body">
                         <form ng-submit="cerrarVenta()" class="form-horizontal">
@@ -102,9 +100,9 @@
                             <div class="form-group">
                                 <label for="" class="col-sm-3 control-label"><strong>Tipo pago:</strong></label>
                                 <div class="col-sm-9">
-                                    <label class="tipo_pago"><input ng-model="tipo_pago" name="tipo_pago" value="contado" type="radio">Contado </label>
-                                    <label class="tipo_pago"><input ng-model="tipo_pago" name="tipo_pago" value="debito" type="radio">Debito </label>
-                                    <label class="tipo_pago"><input ng-model="tipo_pago" name="tipo_pago" value="credito" type="radio">Credito </label>
+                                    <label class="tipo_pago"><input ng-model="tipo_pago" name="tipo_pago" value="contado" type="radio">Contado <br/><i class="fa fa-money"></i></label>
+                                    <label class="tipo_pago"><input ng-model="tipo_pago" name="tipo_pago" value="debito" type="radio">Debito <br/><i class="fa fa-credit-card"></i></label>
+                                    <label class="tipo_pago"><input ng-model="tipo_pago" name="tipo_pago" value="credito" type="radio">Credito <br/><i class="fa fa-cc-visa"></i></label>
                                 </div>
                             </div>
                         </form>
@@ -123,7 +121,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Paso Final</h4>
+                        <h4 class="modal-title" id="myModalLabel"><i class="fa fa-check"></i> Paso Final</h4>
                     </div>
                     <div class="modal-body">
                         <h3 class="text-center">Venta terminada con éxito.</h3><br/>
@@ -137,8 +135,8 @@
                                 <td><h4>@{{ _valorTotal | currency:undefined:0}}</h4></td>
                             </tr>
                             <tr>
-                                <td><h4>Vuelto:</h4></td>
-                                <td><h4>@{{ _vuelto | currency:undefined:0}}</h4></td>
+                                <td><h4><strong>Vuelto:</strong></h4></td>
+                                <td><h4><strong>@{{ _vuelto | currency:undefined:0}}</strong></h4></td>
                             </tr>
                         </table>
                     </div>

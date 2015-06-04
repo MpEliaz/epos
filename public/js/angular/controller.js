@@ -205,6 +205,7 @@ angular.module("ventasApp", ['ui.bootstrap', 'LocalStorageModule'])
                     detalle_venta : $scope.productos,
                     total : manejadorVenta.getValorTotal(),
                     paga_con : $scope.paga_con,
+                    descuento: manejadorVenta.getAlldesc(),
                     tipo_pago : $scope.tipo_pago
                 }).success(function (response) {
                     if(response.estado == "OK")

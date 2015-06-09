@@ -25,19 +25,19 @@ angular.module("ventasApp", ['ui.bootstrap', 'LocalStorageModule'])
         }
         this.add = function (prod) {
             console.log(prod);
-                angular.forEach(this.productos, function (item) {
-                    if(prod.id == item.id){
-                        if(item.cant_venta < item.stock)
-                        {
-                            item.cant_venta = item.cant_venta+1;
-                        }
-                        prod = null;
+            angular.forEach(this.productos, function (item) {
+                if(prod.id == item.id){
+                    if(item.cant_venta < item.stock)
+                    {
+                        item.cant_venta = item.cant_venta+1;
                     }
-                });
+                    prod = null;
+                }
+            });
 
-                if(prod!= null){this.productos.push(prod);}
-                this.updateLocalStorage();
-                this.updateTotal();
+            if(prod!= null){this.productos.push(prod);}
+            this.updateLocalStorage();
+            this.updateTotal();
         };
         this.updateLocalStorage = function () {
 
@@ -59,7 +59,7 @@ angular.module("ventasApp", ['ui.bootstrap', 'LocalStorageModule'])
                 }
             });
             if(this.descuentos.length > 0){
-              subtotal = this.AplicarDescuento(subtotal);
+                subtotal = this.AplicarDescuento(subtotal);
             }
             console.log("subtotal: "+subtotal);
             localStorageService.set(this.ventakey, subtotal);
@@ -100,29 +100,29 @@ angular.module("ventasApp", ['ui.bootstrap', 'LocalStorageModule'])
             productos = this.getAll();
             productos_data=[];
             angular.forEach(productos, function (prod) {
-                productos_data.push({'id': prod.id, 'cantidad': prod.cant_venta})
+                productos_data.push({'id': prod.id, 'cantidad': prod.cant_venta});
             });
             return productos_data;
-        }
+        };
         this.agregarDescuento = function (desc) {
             this.descuentos=null;
             this.descuentos = desc;
             this.updateDescuento();
             return this.descuentos;
-        }
+        };
         this.AplicarDescuento = function (subtotal) {
             console.log("DESCUENTO: "+this.descuentos[0].descuento);
             subtotal = subtotal *(1-(this.descuentos[0].descuento /100));
             console.log(subtotal);
             return subtotal;
 
-        }
+        };
 
     })
-    .controller("VentasController", function($scope, $http, manejadorVenta){
+    .controller("VentasController", function($scope, $http, $location, manejadorVenta){
 
         $scope.getLocation = function(val) {
-            return $http.get('http://localhost:8000/hola/', {
+            return $http.get('/hola/', {
                 params: {
                     nombre: val
                 }
@@ -133,7 +133,6 @@ angular.module("ventasApp", ['ui.bootstrap', 'LocalStorageModule'])
                 });
             });
         };
-
         $scope.tipo_pago = "contado";
         $scope._valorTotal = 0;
         $scope._vuelto = 0;
@@ -153,8 +152,8 @@ angular.module("ventasApp", ['ui.bootstrap', 'LocalStorageModule'])
 
         };
         $scope.clearAll = function () {
-           $scope.productos = manejadorVenta.clean();
-           $scope.valorTotal = manejadorVenta.getValorTotal();
+            $scope.productos = manejadorVenta.clean();
+            $scope.valorTotal = manejadorVenta.getValorTotal();
         };
         $scope.removeProd = function (item) {
             console.log(item);
@@ -177,18 +176,18 @@ angular.module("ventasApp", ['ui.bootstrap', 'LocalStorageModule'])
                 $scope.valorTotal = manejadorVenta.getValorTotal();
             }
         };
-/*        $scope.cerrarVenta = function () {
-           productos = manejadorVenta.cerrarVenta();
-            $http.post('http://localhost:8000/send/', {
-                params: productos
-            }).success(function(response){
-                console.log(response);
-            });
-        };*/
+        /*        $scope.cerrarVenta = function () {
+         productos = manejadorVenta.cerrarVenta();
+         $http.post('http://localhost:8000/send/', {
+         params: productos
+         }).success(function(response){
+         console.log(response);
+         });
+         };*/
         $scope.buscarDescuento = function () {
             val = $scope.desc_seach;
-            return $http.post('http://localhost:8000/desc_/', {
-                    cod_desc : val
+            return $http.post('/desc_/', {
+                cod_desc : val
             }).success(function(response){
                 console.log(response);
                 $scope.descuentos = manejadorVenta.agregarDescuento(response);
@@ -201,7 +200,7 @@ angular.module("ventasApp", ['ui.bootstrap', 'LocalStorageModule'])
         };
         $scope.cerrarVenta = function () {
             if($scope.paga_con >= manejadorVenta.getValorTotal()){
-                $http.post('http://localhost:8000/ventas',{
+                $http.post('/ventas',{
                     detalle_venta : $scope.productos,
                     total : manejadorVenta.getValorTotal(),
                     paga_con : $scope.paga_con,
@@ -225,13 +224,13 @@ angular.module("ventasApp", ['ui.bootstrap', 'LocalStorageModule'])
             {
                 $("#in").addClass("input_warning");
                 $("#msj_monto").show();
-                $('#in').focus()
+                $('#in').focus();
                 $('#in').val("");
             }
         };
         $scope.codesearch = function () {
-            $code = $scope.searchcode
-            return $http.get('http://localhost:8000/search_code/', {
+            $code = $scope.searchcode;
+            return $http.get('/search_code/', {
                 params: {
                     codigo: $code
                 }
@@ -240,5 +239,5 @@ angular.module("ventasApp", ['ui.bootstrap', 'LocalStorageModule'])
                 $scope.addProducto(response.data[0]);
                 $scope.searchcode ="";
             });
-        }
+        };
     });

@@ -30,6 +30,7 @@ Route::resource('productos', 'ProductosController');
 Route::post('descuento/activar', 'DescuentosController@activar');
 Route::post('descuento/desactivar', 'DescuentosController@desactivar');
 Route::resource('descuentos', 'DescuentosController');
+Route::resource('marcas', 'MarcaController');
 
 Route::resource('ventas', 'VentasController');
 
@@ -42,7 +43,7 @@ Route::controllers([
 
 Route::get('hola',function(){
     $nombre = Input::get('nombre');
-    $productos = Producto::where('nombre', 'like', '%'.$nombre.'%')->where('estado','=',true)->get();
+    $productos = Producto::where('nombre', 'like', '%'.$nombre.'%')->where('estado','=',true)->where('stock','>', 0)->get();
     //$productos = Producto::all();
     return response()->json($productos);
 });
@@ -69,3 +70,6 @@ Route::get('mundo', function(){
 
 });
 
+Route::get('test', function(){
+   return Carbon::now();
+});

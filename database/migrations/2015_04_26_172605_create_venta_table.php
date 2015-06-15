@@ -19,7 +19,7 @@ class CreateVentaTable extends Migration {
             $table->integer('nro_venta');
             $table->datetime('fecha_venta');
             $table->enum('tipo_pago',['debito','contado','credito','cheque'])->default('debito');
-            $table->enum('estado_venta',['finalizado','cancelado'])->default('finalizado');
+            $table->enum('estado_venta',['finalizado','cancelado','pendiente'])->default('pendiente');
             $table->integer('total_venta');
             $table->integer('id_vendedor')->unsigned()->nullable();
             $table->integer('id_cliente')->unsigned()->nullable();

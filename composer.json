@@ -5,13 +5,14 @@
 	"license": "MIT",
 	"type": "project",
 	"require": {
-		"laravel/framework": "5.1.*"
+		"laravel/framework": "5.1.*",
         "laravelcollective/html": "~5.0"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "~4.0",
 		"phpspec/phpspec": "~2.1",
         "fzaninotto/faker": "1.5.*@dev",
+        "maatwebsite/excel": "~2.0.0"
 	},
 	"autoload": {
 		"classmap": [
